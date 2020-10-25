@@ -210,7 +210,10 @@ class BayesNet(torch.nn.Module):
         # TODO: make n random forward passes
         # compute the categorical softmax probabilities
         # marginalize the probabilities over the n forward passes
-        probs = F.softmax(self.forward(x), dim=1)
+        probs = []
+
+        for n in range (num_forward_passes):
+            probs[n] = F.softmax(self.forward(x), dim = 1)
 
         assert probs.shape == (batch_size, 10)
         return probs
