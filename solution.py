@@ -205,7 +205,7 @@ class BayesNet(torch.nn.Module):
         # make n = num_forward_passes forward passes to compute the categorical softmax probabilities
         for n in range(num_forward_passes):
             # as in Densenet :
-            passes_result += F.softmax(self.net(x), dim=1)
+            passes_result += F.softmax(self.forward(x), dim=1)
         # marginalize the probabilities over the n forward passes
         probs = passes_result / num_forward_passes
 
