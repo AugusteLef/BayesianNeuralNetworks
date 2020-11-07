@@ -1,0 +1,24 @@
+__init__
+From table 1 of the 'Practical Variational Inference for Neural Network' paper, we set priors to 0 and 0.1 and the weights to 0 and log(0.075).
+
+forward()
+Based on the Blitz library we sample the weight and the bias and return the product of inputs with weitghts and add the bias. 
+
+_kl_divergence()
+Using given values and self.priors values we create two LogNormal distributions in order to compute the kl_divergence between them. To compute the KL Divergence we used the method given by torch (torch.distributions.kl_divergence(p, q)).
+
+predict_class_probs()
+We computed the categorical softmax probabilities by summing n times the probs given by the softmax function. Then we marginalize result and return it.
+
+kl_loss()
+Here we iterate over all layers and sum the loss for each of them (given by kl_divergence). Finally we take the 'average' loss given by dividing the sum of loss by the number of iteration (eq. layers) as the model loss. We return the model loss. 
+
+train_network():
+We add the kl_loss to the loss of the model during the training process.
+
+Parameters:
+Epoch: After testing different values we set the number of epoch to 10. 
+
+BatchSize: According to the experiment of Yann Lecun and after testing differents values, we decided to set the batchsize to 256.
+
+Learning rate: As we used the adam optimizer we set the learning rate to 1e-3 as it is the default value for this optimizer.
